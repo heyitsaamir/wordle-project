@@ -161,6 +161,65 @@ h1 {
   outline-offset: 4px;
 }
 
+.on-screen-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 6px;
+}
+
+.keyboard-row:nth-of-type(2) {
+  padding: 0 20px;
+}
+
+.key {
+  flex: 1;
+  height: 52px;
+  display: grid;
+  place-content: center;
+  border-radius: 6px;
+  background: var(--color-gray-900);
+  color: var(--color-gray-100);
+  font-weight: 700;
+  font-size: 1.15rem;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 2px 0 var(--color-gray-700);
+}
+
+.key.wide {
+  flex: 1.6;
+  font-size: 0.7rem;
+}
+
+.key.correct {
+  background: var(--color-success);
+  color: white;
+  box-shadow: 0 2px 0 hsl(150deg 70% 22%);
+}
+
+.key.misplaced {
+  background: var(--color-warning);
+  color: white;
+  box-shadow: 0 2px 0 hsl(50deg 100% 22%);
+}
+
+.key.incorrect {
+  background: var(--color-gray-300);
+  color: white;
+  box-shadow: 0 2px 0 hsl(0deg 0% 15%);
+}
+
+.key:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .banner {
   position: fixed;
   left: 0;

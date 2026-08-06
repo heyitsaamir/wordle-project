@@ -53,3 +53,26 @@ export function checkGuess(guess, answer) {
 
   return result;
 }
+
+/**
+ * Given every guess made so far, work out the best-known status for each
+ * letter of the alphabet, so an on-screen keyboard can be color-coded.
+ * "correct" beats "misplaced" beats "incorrect".
+ */
+export function getLetterStatuses(guessList, answer) {
+  const statuses = {};
+  const rank = { correct: 3, misplaced: 2, incorrect: 1 };
+
+  guessList
+    .filter((guess) => !!guess)
+    .forEach((guess) => {
+      const result = checkGuess(guess, answer);
+      result.forEach(({ letter, status }) => {
+        if (!statuses[letter] || rank[status] > rank[statuses[letter]]) {
+          statuses[letter] = status;
+        }
+      });
+    });
+
+  return statuses;
+}
