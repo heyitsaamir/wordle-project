@@ -247,58 +247,6 @@ h1 {
   }
 }
 
-/*
-  Style variant: minimal
-  Flat, light, thin borders matching the guess-grid cells.
-*/
-body.keyboard-style-minimal .keyboard-key {
-  background: white;
-  color: var(--color-gray-100);
-  border: 2px solid var(--color-gray-700);
-  border-radius: 4px;
-}
-body.keyboard-style-minimal .keyboard-key:hover:not(:disabled) {
-  border-color: var(--color-gray-500);
-  background: var(--color-gray-900);
-}
-body.keyboard-style-minimal .keyboard-key.correct {
-  background: var(--color-success);
-  border-color: var(--color-success);
-  color: white;
-}
-body.keyboard-style-minimal .keyboard-key.misplaced {
-  background: var(--color-warning);
-  border-color: var(--color-warning);
-  color: white;
-}
-body.keyboard-style-minimal .keyboard-key.incorrect {
-  background: var(--color-gray-300);
-  border-color: var(--color-gray-300);
-  color: white;
-}
-
-/*
-  Style variant: pill
-  Rounded pill-shaped keys with more generous spacing.
-*/
-body.keyboard-style-pill .on-screen-keyboard {
-  gap: 12px;
-}
-body.keyboard-style-pill .keyboard-row {
-  gap: 8px;
-}
-body.keyboard-style-pill .keyboard-key {
-  border-radius: 999px;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
-}
-body.keyboard-style-pill .keyboard-key:active:not(:disabled) {
-  box-shadow: none;
-  transform: translateY(2px);
-}
-body.keyboard-style-pill .keyboard-key--wide {
-  border-radius: 999px;
-}
-
 .happy.banner {
   background: var(--color-success);
   color: white;
