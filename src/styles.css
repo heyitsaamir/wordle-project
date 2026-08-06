@@ -176,6 +176,129 @@ h1 {
   will-change: transform;
 }
 
+/*
+  On-screen keyboard
+*/
+.on-screen-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  user-select: none;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.keyboard-key {
+  flex: 1;
+  min-width: 0;
+  max-width: 44px;
+  height: 3.25rem;
+  display: grid;
+  place-content: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 4px;
+  background: var(--color-gray-700);
+  color: var(--color-gray-100);
+  text-transform: uppercase;
+  transition: background 100ms ease;
+}
+
+.keyboard-key:hover:not(:disabled) {
+  background: var(--color-gray-500);
+  color: white;
+}
+
+.keyboard-key:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.keyboard-key--wide {
+  max-width: 68px;
+  font-size: 0.75rem;
+}
+
+.keyboard-key.correct {
+  background: var(--color-success);
+  color: white;
+}
+.keyboard-key.misplaced {
+  background: var(--color-warning);
+  color: white;
+}
+.keyboard-key.incorrect {
+  background: var(--color-gray-300);
+  color: white;
+}
+
+@media (max-width: 25rem) {
+  .keyboard-key {
+    height: 2.75rem;
+    font-size: 0.8rem;
+  }
+  .keyboard-key--wide {
+    font-size: 0.65rem;
+  }
+}
+
+/*
+  Style variant: minimal
+  Flat, light, thin borders matching the guess-grid cells.
+*/
+body.keyboard-style-minimal .keyboard-key {
+  background: white;
+  color: var(--color-gray-100);
+  border: 2px solid var(--color-gray-700);
+  border-radius: 4px;
+}
+body.keyboard-style-minimal .keyboard-key:hover:not(:disabled) {
+  border-color: var(--color-gray-500);
+  background: var(--color-gray-900);
+}
+body.keyboard-style-minimal .keyboard-key.correct {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: white;
+}
+body.keyboard-style-minimal .keyboard-key.misplaced {
+  background: var(--color-warning);
+  border-color: var(--color-warning);
+  color: white;
+}
+body.keyboard-style-minimal .keyboard-key.incorrect {
+  background: var(--color-gray-300);
+  border-color: var(--color-gray-300);
+  color: white;
+}
+
+/*
+  Style variant: pill
+  Rounded pill-shaped keys with more generous spacing.
+*/
+body.keyboard-style-pill .on-screen-keyboard {
+  gap: 12px;
+}
+body.keyboard-style-pill .keyboard-row {
+  gap: 8px;
+}
+body.keyboard-style-pill .keyboard-key {
+  border-radius: 999px;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+}
+body.keyboard-style-pill .keyboard-key:active:not(:disabled) {
+  box-shadow: none;
+  transform: translateY(2px);
+}
+body.keyboard-style-pill .keyboard-key--wide {
+  border-radius: 999px;
+}
+
 .happy.banner {
   background: var(--color-success);
   color: white;

@@ -53,3 +53,30 @@ export function checkGuess(guess, answer) {
 
   return result;
 }
+
+/**
+ * Computes the best-known status for every letter that's been guessed
+ * so far, so the on-screen keyboard can color its keys. Priority order
+ * (best to worst): correct > misplaced > incorrect.
+ */
+export function getLetterStatuses(guessList, answer) {
+  const statuses = {};
+
+  const priority = { correct: 3, misplaced: 2, incorrect: 1 };
+
+  guessList.forEach((guess) => {
+    const result = checkGuess(guess, answer);
+    if (!result) {
+      return;
+    }
+
+    result.forEach(({ letter, status }) => {
+      const existing = statuses[letter];
+      if (!existing || priority[status] > priority[existing]) {
+        statuses[letter] = status;
+      }
+    });
+  });
+
+  return statuses;
+}
