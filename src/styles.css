@@ -161,6 +161,114 @@ h1 {
   outline-offset: 4px;
 }
 
+.cell.filled {
+  border-color: var(--color-gray-500);
+}
+
+/*
+  On-screen keyboard
+*/
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  user-select: none;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.keyboard-key {
+  flex: 1;
+  max-width: 44px;
+  height: 3.25rem;
+  display: grid;
+  place-content: center;
+  border-radius: 4px;
+  background: var(--color-gray-700);
+  color: var(--color-gray-100);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: background-color 100ms ease;
+}
+
+.keyboard-key:hover:not(:disabled) {
+  background: var(--color-gray-500);
+}
+
+.keyboard-key:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.keyboard-key--wide {
+  flex: 1.6;
+  max-width: 70px;
+  font-size: 0.75rem;
+}
+
+.keyboard-key.correct {
+  background: var(--color-success);
+  color: white;
+}
+.keyboard-key.misplaced {
+  background: var(--color-warning);
+  color: white;
+}
+.keyboard-key.incorrect {
+  background: var(--color-gray-300);
+  color: white;
+}
+
+/* Classic: large, high-contrast keys, close to the original Wordle look */
+.keyboard--classic .keyboard-key {
+  height: 3.5rem;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Compact: smaller, dark, minimalist keys */
+.keyboard--compact {
+  gap: 4px;
+}
+.keyboard--compact .keyboard-row {
+  gap: 4px;
+}
+.keyboard--compact .keyboard-key {
+  height: 2.5rem;
+  max-width: 34px;
+  font-size: 0.8rem;
+  background: var(--color-gray-100);
+  color: var(--color-gray-900);
+  border-radius: 3px;
+}
+.keyboard--compact .keyboard-key--wide {
+  max-width: 54px;
+  font-size: 0.65rem;
+}
+.keyboard--compact .keyboard-key:hover:not(:disabled) {
+  background: var(--color-gray-300);
+}
+
+/* Hybrid: sits below the existing text input, slightly smaller and quieter */
+.keyboard--hybrid {
+  gap: 4px;
+  opacity: 0.95;
+}
+.keyboard--hybrid .keyboard-key {
+  height: 2.25rem;
+  max-width: 32px;
+  font-size: 0.75rem;
+}
+.keyboard--hybrid .keyboard-key--wide {
+  max-width: 50px;
+  font-size: 0.6rem;
+}
+
 .banner {
   position: fixed;
   left: 0;
