@@ -2,8 +2,8 @@ import React from 'react';
 import { range } from '../../utils';
 import { checkGuess } from '/src/game-helpers.js'
 
-function GuessCells({guess, answer}) {
-  const results = checkGuess(guess, answer)
+function GuessCells({guess, answer, isActive = false}) {
+  const results = isActive ? null : checkGuess(guess, answer)
 
   function className(index) {
     if (!results) {

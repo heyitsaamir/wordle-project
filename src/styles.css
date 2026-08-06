@@ -140,25 +140,73 @@ h1 {
   color: white;
 }
 
-.guess-input-wrapper {
+/*
+  On-screen keyboard (compact / minimal outline style)
+*/
+.on-screen-keyboard {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  height: 6.75rem;
+  gap: 6px;
+  padding-bottom: 8px;
 }
 
-.guess-input-wrapper label {
-  font-size: 1.25rem;
+.keyboard-row {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
 }
 
-.guess-input-wrapper input {
-  display: block;
-  width: 100%;
-  font-size: 2rem;
-  border: 2px solid var(--color-gray-300);
-  border-radius: 4px;
-  padding: 8px 16px;
-  outline-offset: 4px;
+.keyboard-key {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  display: grid;
+  place-content: center;
+  background: white;
+  border: 1.5px solid var(--color-gray-500);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--color-gray-100);
+  transition: background-color 100ms ease, border-color 100ms ease, color 100ms ease;
+}
+
+.keyboard-key:hover:not(:disabled) {
+  background: var(--color-gray-900);
+}
+
+.keyboard-key:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.keyboard-key--wide {
+  flex: 1.6;
+  font-size: 0.7rem;
+}
+
+.keyboard-key.correct {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: white;
+}
+.keyboard-key.misplaced {
+  background: var(--color-warning);
+  border-color: var(--color-warning);
+  color: white;
+}
+.keyboard-key.incorrect {
+  background: var(--color-gray-500);
+  border-color: var(--color-gray-500);
+  color: white;
+}
+
+@media (max-width: 25rem) {
+  .keyboard-key {
+    height: 38px;
+    font-size: 0.7rem;
+  }
 }
 
 .banner {
