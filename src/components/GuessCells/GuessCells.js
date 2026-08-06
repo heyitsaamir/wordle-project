@@ -2,12 +2,12 @@ import React from 'react';
 import { range } from '../../utils';
 import { checkGuess } from '/src/game-helpers.js'
 
-function GuessCells({guess, answer}) {
-  const results = checkGuess(guess, answer)
+function GuessCells({guess, answer, isSubmitted = true}) {
+  const results = isSubmitted ? checkGuess(guess, answer) : null
 
   function className(index) {
     if (!results) {
-      return "cell"
+      return guess && guess[index] ? "cell filled" : "cell"
     }
 
     return `cell ${results[index].status}`
