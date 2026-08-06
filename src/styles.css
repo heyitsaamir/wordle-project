@@ -161,6 +161,128 @@ h1 {
   outline-offset: 4px;
 }
 
+/*
+  Keyboard: shared base styles
+*/
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  user-select: none;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.key {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  place-content: center;
+  height: 3.25rem;
+  border-radius: 4px;
+  background: var(--color-gray-700);
+  color: var(--color-gray-100);
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  transition: background 100ms ease;
+}
+
+.key:active:not(:disabled) {
+  background: var(--color-gray-500);
+}
+
+.key:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.key--wide {
+  flex: 1.6;
+  font-size: 0.7rem;
+}
+
+.key.correct {
+  background: var(--color-success);
+  color: white;
+}
+.key.incorrect {
+  background: var(--color-gray-300);
+  color: white;
+}
+.key.misplaced {
+  background: var(--color-warning);
+  color: white;
+}
+
+/*
+  Variant A: Classic — sits below the board, generously sized keys.
+*/
+.keyboard--classic {
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+.keyboard--classic .key {
+  height: 3.5rem;
+  font-size: 1rem;
+}
+
+/*
+  Variant B: Minimal — smaller, flatter keys, no color feedback,
+  supplements the text input rather than replacing it.
+*/
+.keyboard--minimal {
+  max-width: 420px;
+  margin: 0 auto;
+  width: 100%;
+}
+.keyboard--minimal .key {
+  height: 2.5rem;
+  font-size: 0.85rem;
+  background: var(--color-gray-900);
+  color: var(--color-gray-100);
+  border: 1px solid var(--color-gray-700);
+}
+.keyboard--minimal .key.correct,
+.keyboard--minimal .key.incorrect,
+.keyboard--minimal .key.misplaced {
+  background: var(--color-gray-900);
+  color: var(--color-gray-100);
+  border-color: var(--color-gray-700);
+}
+
+/*
+  Variant C: Compact dark — fixed to the bottom of the viewport like
+  the official Wordle app, condensed spacing.
+*/
+.keyboard--compact-dark {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+  background: var(--color-gray-100);
+  max-width: 100%;
+  gap: 6px;
+}
+.keyboard--compact-dark .keyboard-row {
+  gap: 4px;
+}
+.keyboard--compact-dark .key {
+  height: 2.85rem;
+  font-size: 0.8rem;
+  background: var(--color-gray-500);
+  color: white;
+}
+.keyboard--compact-dark .key--wide {
+  font-size: 0.6rem;
+}
+
 .banner {
   position: fixed;
   left: 0;

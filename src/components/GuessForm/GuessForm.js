@@ -1,19 +1,22 @@
 import React from 'react';
 
-function GuessForm({ addToGuessList, disableForm = false}) {
-  const [guess, setGuess] = React.useState("")
+function GuessForm({ addToGuessList, disableForm = false, guess, setGuess }) {
+  const [internalGuess, setInternalGuess] = React.useState("")
+  const isControlled = guess !== undefined && setGuess !== undefined
+  const currentGuess = isControlled ? guess : internalGuess
+  const updateGuess = isControlled ? setGuess : setInternalGuess
   const validateLength = /([A-Z]){5}/g
 
   function handleSubmit(event) {
     event.preventDefault()
 
-    if (!guess.match(validateLength)) {
+    if (!currentGuess.match(validateLength)) {
       return window.alert("Guess must have exactly 5 A-Z characters")
     }
 
-    console.info({ guess });
-    addToGuessList(guess)
-    setGuess("")
+    console.info({ guess: currentGuess });
+    addToGuessList(currentGuess)
+    updateGuess("")
   }
 
   return (
@@ -23,8 +26,8 @@ function GuessForm({ addToGuessList, disableForm = false}) {
         required
         id="guess-input"
         type="text"
-        value={guess}
-        onChange={event => setGuess(event.target.value.toUpperCase())}
+        value={currentGuess}
+        onChange={event => updateGuess(event.target.value.toUpperCase())}
         maxLength={5}
         minLength={5}
         disabled={disableForm}

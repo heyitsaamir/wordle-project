@@ -8,6 +8,13 @@ import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import GuessForm from '../GuessForm'
 import GuessResults from '../GuessResults/GuessResults';
 import ResultsBanner from '../ResultsBanner';
+import Keyboard from '../Keyboard';
+
+// Temporary switch for previewing keyboard design options during review.
+// Set via `?kb=classic|minimal|compact-dark` in the URL. Defaults to
+// "classic", the shipped variant.
+const KEYBOARD_VARIANT =
+  new URLSearchParams(window.location.search).get('kb') || 'classic';
 
 function Game() {
   const [answer, setAnswer] = React.useState(sample(WORDS))
@@ -16,8 +23,11 @@ function Game() {
   const [isGameWon, setIsGameWon] = React.useState(false)
   const [isGameLost, setIsGameLost] = React.useState(false)
   const [disableForm, setDisableForm] = React.useState(false)
+  const [currentGuess, setCurrentGuess] = React.useState("")
 
   console.info({ answer });
+
+  const VALID_GUESS = /^[A-Z]{5}$/;
 
   function addToGuessList(guess) {
     const newGuessList = [...guessList]
@@ -36,6 +46,15 @@ function Game() {
     }
   }
 
+  function handleEnter() {
+    if (!VALID_GUESS.test(currentGuess)) {
+      return window.alert("Guess must have exactly 5 A-Z characters")
+    }
+
+    addToGuessList(currentGuess)
+    setCurrentGuess("")
+  }
+
   function resetGame() {
     setGuessListIndex(0)
     setGuessList(range(NUM_OF_GUESSES_ALLOWED).map(() => ""))
@@ -43,13 +62,28 @@ function Game() {
     setIsGameLost(false)
     setDisableForm(false)
     setAnswer(sample(WORDS))
+    setCurrentGuess("")
   }
 
   return (
     <>
       {isGameWon || isGameLost ? <ResultsBanner isGameWon={isGameWon} answer={answer} guessListIndex={guessListIndex} resetGame={resetGame} /> : null}
       <GuessResults guessList={guessList} answer={answer} />
-      <GuessForm addToGuessList={addToGuessList} disableForm={disableForm} />
+      <GuessForm
+        addToGuessList={addToGuessList}
+        disableForm={disableForm}
+        guess={currentGuess}
+        setGuess={setCurrentGuess}
+      />
+      <Keyboard
+        variant={KEYBOARD_VARIANT}
+        guess={currentGuess}
+        setGuess={setCurrentGuess}
+        onEnter={handleEnter}
+        guessList={guessList}
+        answer={answer}
+        disableForm={disableForm}
+      />
     </>
   )
 }
