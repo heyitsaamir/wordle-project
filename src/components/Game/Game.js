@@ -10,12 +10,6 @@ import GuessResults from '../GuessResults/GuessResults';
 import ResultsBanner from '../ResultsBanner';
 import Keyboard from '../Keyboard';
 
-// Temporary switch for previewing keyboard design options during review.
-// Set via `?kb=classic|minimal|compact-dark` in the URL. Defaults to
-// "classic", the shipped variant.
-const KEYBOARD_VARIANT =
-  new URLSearchParams(window.location.search).get('kb') || 'classic';
-
 function Game() {
   const [answer, setAnswer] = React.useState(sample(WORDS))
   const [guessList, setGuessList] = React.useState(range(NUM_OF_GUESSES_ALLOWED).map(() => ""))
@@ -76,12 +70,8 @@ function Game() {
         setGuess={setCurrentGuess}
       />
       <Keyboard
-        variant={KEYBOARD_VARIANT}
-        guess={currentGuess}
         setGuess={setCurrentGuess}
         onEnter={handleEnter}
-        guessList={guessList}
-        answer={answer}
         disableForm={disableForm}
       />
     </>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { checkGuess } from '../../game-helpers';
 
 const ROWS = [
   ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -7,43 +6,9 @@ const ROWS = [
   ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BACKSPACE'],
 ];
 
-// Priority for displaying a letter's best-known status across all guesses.
-const STATUS_PRIORITY = { correct: 3, misplaced: 2, incorrect: 1 };
-
-function getLetterStatuses(guessList, answer) {
-  const statuses = {};
-
-  guessList.forEach((guess) => {
-    if (!guess) {
-      return;
-    }
-
-    const result = checkGuess(guess, answer);
-    result.forEach(({ letter, status }) => {
-      const currentPriority = STATUS_PRIORITY[statuses[letter]] || 0;
-      if (STATUS_PRIORITY[status] > currentPriority) {
-        statuses[letter] = status;
-      }
-    });
-  });
-
-  return statuses;
-}
-
-function Keyboard({
-  variant = 'classic',
-  guess,
-  setGuess,
-  onEnter,
-  guessList,
-  answer,
-  disableForm = false,
-}) {
-  const letterStatuses = React.useMemo(
-    () => getLetterStatuses(guessList, answer),
-    [guessList, answer]
-  );
-
+// A compact on-screen keyboard that types into the guess input.
+// It supplements (rather than replaces) typing on a physical keyboard.
+function Keyboard({ setGuess, onEnter, disableForm = false }) {
   function handleKeyClick(key) {
     if (disableForm) {
       return;
@@ -63,19 +28,16 @@ function Keyboard({
   }
 
   return (
-    <div className={`keyboard keyboard--${variant}`}>
+    <div className="keyboard">
       {ROWS.map((row, rowIndex) => (
         <div className="keyboard-row" key={rowIndex}>
           {row.map((key) => {
             const isWide = key === 'ENTER' || key === 'BACKSPACE';
-            const status = letterStatuses[key];
             return (
               <button
                 type="button"
                 key={key}
-                className={`key${isWide ? ' key--wide' : ''}${
-                  status ? ` ${status}` : ''
-                }`}
+                className={`key${isWide ? ' key--wide' : ''}`}
                 onClick={() => handleKeyClick(key)}
                 disabled={disableForm}
                 aria-label={key === 'BACKSPACE' ? 'Backspace' : key}
