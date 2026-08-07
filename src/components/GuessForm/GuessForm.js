@@ -1,7 +1,6 @@
 import React from 'react';
 
-function GuessForm({ addToGuessList, disableForm = false}) {
-  const [guess, setGuess] = React.useState("")
+function GuessForm({ addToGuessList, disableForm = false, guess, setGuess }) {
   const validateLength = /([A-Z]){5}/g
 
   function handleSubmit(event) {
