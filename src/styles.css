@@ -15,6 +15,23 @@ html {
   --color-gray-500: hsl(0deg 0% 50%);
   --color-gray-700: hsl(0deg 0% 75%);
   --color-gray-900: hsl(0deg 0% 90%);
+
+  --color-background: hsl(0deg 0% 100%);
+  --color-text: var(--color-gray-100);
+}
+
+html[data-theme='dark'] {
+  --color-success: hsl(150deg 60% 40%);
+  --color-warning: hsl(50deg 90% 45%);
+  --color-error: hsl(0deg 70% 55%);
+  --color-gray-100: hsl(0deg 0% 90%);
+  --color-gray-300: hsl(0deg 0% 75%);
+  --color-gray-500: hsl(0deg 0% 50%);
+  --color-gray-700: hsl(0deg 0% 35%);
+  --color-gray-900: hsl(0deg 0% 15%);
+
+  --color-background: hsl(220deg 15% 12%);
+  --color-text: var(--color-gray-100);
 }
 
 /*
@@ -22,6 +39,9 @@ html {
 */
 body {
   font-family: sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 @media (max-height: 600px) {
@@ -159,6 +179,22 @@ h1 {
   border-radius: 4px;
   padding: 8px 16px;
   outline-offset: 4px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+.theme-toggle-btn {
+  display: grid;
+  place-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  color: var(--color-gray-300);
+}
+
+.theme-toggle-btn:hover {
+  background: var(--color-gray-900);
 }
 
 .banner {
