@@ -10,6 +10,20 @@
     <title>Word Game</title>
     <link rel="stylesheet" href="../src/reset.css" />
     <link rel="stylesheet" href="../src/styles.css" />
+    <script>
+      (function () {
+        try {
+          var stored = window.localStorage.getItem('word-game-theme');
+          var theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
     <script type="module" src="../src/index.js"></script>
   </head>
   <body>
