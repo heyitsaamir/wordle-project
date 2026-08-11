@@ -24,6 +24,24 @@ body {
   font-family: sans-serif;
 }
 
+body.comic-sans-mode,
+body.comic-sans-mode input,
+body.comic-sans-mode button {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+.comic-sans-toggle {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border: 1px solid var(--color-gray-500);
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.comic-sans-toggle:hover {
+  background: var(--color-gray-900);
+}
+
 @media (max-height: 600px) {
   body {
     --game-spacing: 8px;
