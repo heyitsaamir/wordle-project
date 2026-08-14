@@ -7,17 +7,17 @@ html {
   --game-spacing: 32px;
   --header-height: 4rem;
 
-  --color-success: hsl(150deg 70% 30%);
-  --color-warning: hsl(50deg 100% 30%);
-  --color-error: hsl(0deg 70% 45%);
-  --color-gray-100: hsl(0deg 0% 10%);
-  --color-gray-300: hsl(0deg 0% 25%);
-  --color-gray-500: hsl(0deg 0% 50%);
-  --color-gray-700: hsl(0deg 0% 75%);
-  --color-gray-900: hsl(0deg 0% 90%);
+  --color-success: hsl(25deg 75% 40%);
+  --color-warning: hsl(35deg 90% 50%);
+  --color-error: hsl(10deg 65% 42%);
+  --color-gray-100: hsl(25deg 30% 12%);
+  --color-gray-300: hsl(25deg 25% 28%);
+  --color-gray-500: hsl(28deg 20% 48%);
+  --color-gray-700: hsl(30deg 30% 72%);
+  --color-gray-900: hsl(35deg 40% 92%);
 
-  --color-background: hsl(0deg 0% 100%);
-  --color-text: hsl(0deg 0% 10%);
+  --color-background: hsl(35deg 45% 96%);
+  --color-text: hsl(20deg 40% 15%);
 
   background: var(--color-background);
   color: var(--color-text);
@@ -25,17 +25,17 @@ html {
 }
 
 html[data-theme='dark'] {
-  --color-success: hsl(150deg 60% 40%);
-  --color-warning: hsl(50deg 90% 45%);
-  --color-error: hsl(0deg 70% 55%);
-  --color-gray-100: hsl(0deg 0% 90%);
-  --color-gray-300: hsl(0deg 0% 65%);
-  --color-gray-500: hsl(0deg 0% 50%);
-  --color-gray-700: hsl(0deg 0% 35%);
-  --color-gray-900: hsl(0deg 0% 15%);
+  --color-success: hsl(25deg 65% 48%);
+  --color-warning: hsl(35deg 85% 55%);
+  --color-error: hsl(10deg 60% 52%);
+  --color-gray-100: hsl(30deg 35% 90%);
+  --color-gray-300: hsl(28deg 25% 65%);
+  --color-gray-500: hsl(28deg 20% 45%);
+  --color-gray-700: hsl(25deg 30% 32%);
+  --color-gray-900: hsl(20deg 35% 14%);
 
-  --color-background: hsl(0deg 0% 8%);
-  --color-text: hsl(0deg 0% 92%);
+  --color-background: hsl(20deg 35% 10%);
+  --color-text: hsl(35deg 40% 92%);
 }
 
 /*
