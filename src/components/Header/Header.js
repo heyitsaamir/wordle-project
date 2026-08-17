@@ -31,6 +31,7 @@ function Header() {
         <button
           className="theme-toggle-btn"
           onClick={toggleTheme}
+          title="Why do programmers prefer dark mode? Because light attracts bugs."
           aria-label={
             theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
           }
