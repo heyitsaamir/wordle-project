@@ -1,6 +1,8 @@
-// Small helper for playing short celebratory sounds without needing an
+// Small helper for playing a short celebratory sound without needing an
 // external audio asset (keeps the bundle light and avoids network fetches).
-const WIN_CHIME_NOTES = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+// Synthesizes a deep, brassy foghorn blast using detuned low-frequency
+// oscillators through a lowpass filter.
+const FOGHORN_FREQUENCIES = [110, 114]; // A2, slightly detuned for a beating "brassy" tone
 
 export function playWinSound() {
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -8,29 +10,32 @@ export function playWinSound() {
 
   try {
     const context = new AudioContextClass();
-    const noteDuration = 0.12;
+    const now = context.currentTime;
+    const duration = 1.3;
 
-    WIN_CHIME_NOTES.forEach((frequency, index) => {
-      const startTime = context.currentTime + index * noteDuration;
+    const filter = context.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 700;
+    filter.connect(context.destination);
+
+    const gainNode = context.createGain();
+    // Slow attack and hold, then a gentle release, like a real foghorn blast.
+    gainNode.gain.setValueAtTime(0.0001, now);
+    gainNode.gain.exponentialRampToValueAtTime(0.35, now + 0.25);
+    gainNode.gain.setValueAtTime(0.35, now + duration - 0.3);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+    gainNode.connect(filter);
+
+    FOGHORN_FREQUENCIES.forEach((frequency) => {
       const oscillator = context.createOscillator();
-      const gainNode = context.createGain();
-
-      oscillator.type = 'triangle';
+      oscillator.type = 'sawtooth';
       oscillator.frequency.value = frequency;
-
-      // Quick fade in/out per note so it sounds like a chime rather than a click.
-      gainNode.gain.setValueAtTime(0.0001, startTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.2, startTime + 0.02);
-      gainNode.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.3);
-
       oscillator.connect(gainNode);
-      gainNode.connect(context.destination);
-      oscillator.start(startTime);
-      oscillator.stop(startTime + 0.35);
+      oscillator.start(now);
+      oscillator.stop(now + duration);
     });
 
-    const totalDurationMs = (WIN_CHIME_NOTES.length * noteDuration + 0.4) * 1000;
-    setTimeout(() => context.close(), totalDurationMs);
+    setTimeout(() => context.close(), (duration + 0.2) * 1000);
   } catch (error) {
     // Sound is a nice-to-have; never let it break gameplay (e.g. unsupported browser).
     console.warn('Unable to play win sound', error);
