@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { playWinSound } from '../../sound-helpers';
+
 const NUM_OF_CONFETTI_PIECES = 60;
 const CONFETTI_COLOURS = [
   'var(--color-success)',
@@ -24,6 +26,10 @@ function createPieces() {
 
 function Confetti() {
   const [pieces] = React.useState(createPieces);
+
+  React.useEffect(() => {
+    playWinSound();
+  }, []);
 
   return (
     <div className="confetti" aria-hidden="true">
