@@ -2,11 +2,11 @@ import React from 'react';
 
 const PIECES_PER_BURST = 10;
 const CONFETTI_COLOURS = [
-  '#ff1493', // deep pink
-  '#ff69b4', // hot pink
-  '#ffb6c1', // light pink
-  '#f72585', // magenta pink
-  '#ff8fab', // pastel pink
+  '#ffd700', // gold
+  '#ffeb3b', // bright yellow
+  '#fff176', // light yellow
+  '#ffc107', // amber
+  '#fff59d', // pastel yellow
 ];
 
 // Generate randomized styling for each confetti piece once, so the burst
