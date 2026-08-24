@@ -1,4 +1,27 @@
 /*
+  Fonts
+
+  Comic Neue is a free, OFL-licensed, metric-compatible alternative to Comic
+  Sans MS. We self-host it so the "Word Game" heading reliably renders in a
+  Comic Sans-style font on every device, regardless of whether the system
+  font "Comic Sans MS" happens to be installed. See src/fonts/ComicNeue-OFL.txt.
+*/
+@font-face {
+  font-family: 'Comic Neue';
+  src: url('./fonts/ComicNeue-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Comic Neue';
+  src: url('./fonts/ComicNeue-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
   Theme and global variables
 */
 html {
@@ -85,6 +108,7 @@ h1 {
   font-size: 2rem;
   line-height: var(--header-height);
   text-align: center;
+  font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
 }
 
 @media (max-width: 25rem) {
