@@ -8,6 +8,7 @@ import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import GuessForm from '../GuessForm'
 import GuessResults from '../GuessResults/GuessResults';
 import ResultsBanner from '../ResultsBanner';
+import Confetti from '../Confetti';
 
 function Game() {
   const [answer, setAnswer] = React.useState(sample(WORDS))
@@ -46,6 +47,7 @@ function Game() {
 
   return (
     <>
+      {isGameWon ? <Confetti /> : null}
       {isGameWon || isGameLost ? <ResultsBanner isGameWon={isGameWon} answer={answer} guessListIndex={guessListIndex} resetGame={resetGame} /> : null}
       <GuessResults guessList={guessList} answer={answer} />
       <GuessForm addToGuessList={addToGuessList} disableForm={disableForm} />
