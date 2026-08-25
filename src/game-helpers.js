@@ -53,3 +53,29 @@ export function checkGuess(guess, answer) {
 
   return result;
 }
+
+/**
+ * Computes the best-known status for every letter that has been guessed
+ * so far, so an on-screen keyboard can reflect correct/misplaced/incorrect
+ * state the same way the guess grid does.
+ */
+export function getLetterStatuses(guessList, answer) {
+  const STATUS_PRIORITY = { correct: 3, misplaced: 2, incorrect: 1 };
+  const statuses = {};
+
+  guessList.forEach((guess) => {
+    const result = checkGuess(guess, answer);
+    if (!result) {
+      return;
+    }
+
+    result.forEach(({ letter, status }) => {
+      const existing = statuses[letter];
+      if (!existing || STATUS_PRIORITY[status] > STATUS_PRIORITY[existing]) {
+        statuses[letter] = status;
+      }
+    });
+  });
+
+  return statuses;
+}

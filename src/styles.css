@@ -251,6 +251,69 @@ h1 {
 }
 
 /*
+  On-screen keyboard
+*/
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  user-select: none;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.key {
+  flex: 1;
+  min-width: 0;
+  max-width: 43px;
+  height: 3.25rem;
+  display: grid;
+  place-content: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-transform: uppercase;
+  transition: background 100ms, color 100ms, transform 100ms, box-shadow 100ms;
+}
+
+.key--wide {
+  flex: 1.6;
+  max-width: 68px;
+  font-size: 0.7rem;
+}
+
+.key:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.key:disabled {
+  cursor: default;
+}
+
+/* Key coloring for correct/misplaced/incorrect status */
+.key {
+  background: var(--color-gray-700);
+  color: var(--color-gray-100);
+}
+.key--correct {
+  background: var(--color-success);
+  color: white;
+}
+.key--misplaced {
+  background: var(--color-warning);
+  color: white;
+}
+.key--incorrect {
+  background: var(--color-gray-500);
+  color: white;
+}
+
+/*
   Keyframe animations
 */
 @keyframes slideUp {
