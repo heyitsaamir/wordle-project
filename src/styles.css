@@ -251,6 +251,53 @@ h1 {
 }
 
 /*
+  Balloons animation
+*/
+.balloons {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.balloon {
+  position: absolute;
+  bottom: -140px;
+  width: 60px;
+  height: 74px;
+  background: var(--balloon-color, var(--color-success));
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow: inset -8px -8px 0 rgba(0, 0, 0, 0.08);
+  animation-name: balloonRise;
+  animation-timing-function: ease-in;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.balloon::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid var(--balloon-color, var(--color-success));
+}
+
+.balloon-string {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: 60px;
+  background: var(--color-gray-500);
+}
+
+/*
   Keyframe animations
 */
 @keyframes slideUp {
@@ -259,5 +306,19 @@ h1 {
   }
   to {
     transform: translateY(0%);
+  }
+}
+
+@keyframes balloonRise {
+  0% {
+    bottom: -140px;
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    bottom: 110vh;
+    opacity: 0;
   }
 }
