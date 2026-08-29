@@ -115,6 +115,7 @@ h1 {
   display: flex;
   gap: 4px;
   margin-bottom: 4px;
+  perspective: 400px;
 }
 
 .cell {
@@ -126,7 +127,18 @@ h1 {
   border: 2px solid var(--color-gray-700);
   border-radius: var(--radius);
   font-size: 2rem;
+  transform-style: preserve-3d;
 }
+
+/*
+  Stagger each cell's flip so letters reveal one after another,
+  left to right, like a wave.
+*/
+.cell:nth-child(1) { animation-delay: 0ms; }
+.cell:nth-child(2) { animation-delay: 150ms; }
+.cell:nth-child(3) { animation-delay: 300ms; }
+.cell:nth-child(4) { animation-delay: 450ms; }
+.cell:nth-child(5) { animation-delay: 600ms; }
 
 /*
   Round the corners for the 4 cells at the very corners of
@@ -145,20 +157,73 @@ h1 {
   --radius: 0px 0px 0px 4px;
 }
 
+.cell.correct,
+.cell.incorrect,
+.cell.misplaced {
+  animation-name: flip-reveal;
+  animation-duration: 600ms;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+  /* animation-delay is set per-cell above via the :nth-child stagger rules */
+}
+
 .cell.correct {
-  background: var(--color-success);
-  border-color: var(--color-success);
-  color: white;
+  --cell-bg: var(--color-success);
+  --cell-border: var(--color-success);
+  --cell-color: white;
 }
 .cell.incorrect {
-  background: var(--color-gray-300);
-  border-color: var(--color-gray-300);
-  color: white;
+  --cell-bg: var(--color-gray-300);
+  --cell-border: var(--color-gray-300);
+  --cell-color: white;
 }
 .cell.misplaced {
-  background: var(--color-warning);
-  border-color: var(--color-warning);
-  color: white;
+  --cell-bg: var(--color-warning);
+  --cell-border: var(--color-warning);
+  --cell-color: white;
+}
+
+/*
+  Flip the tile over like a card: it rotates 0deg -> 90deg (edge-on,
+  showing nothing) while still looking "blank", then swaps to its
+  final result color partway through, then rotates back to 0deg.
+*/
+@keyframes flip-reveal {
+  0% {
+    transform: rotateX(0deg);
+    background: var(--color-background);
+    border-color: var(--color-gray-700);
+    color: var(--color-text);
+  }
+  49% {
+    transform: rotateX(90deg);
+    background: var(--color-background);
+    border-color: var(--color-gray-700);
+    color: var(--color-text);
+  }
+  50% {
+    transform: rotateX(90deg);
+    background: var(--cell-bg);
+    border-color: var(--cell-border);
+    color: var(--cell-color);
+  }
+  100% {
+    transform: rotateX(0deg);
+    background: var(--cell-bg);
+    border-color: var(--cell-border);
+    color: var(--cell-color);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell.correct,
+  .cell.incorrect,
+  .cell.misplaced {
+    animation: none;
+    background: var(--cell-bg);
+    border-color: var(--cell-border);
+    color: var(--cell-color);
+  }
 }
 
 .guess-input-wrapper {
