@@ -146,19 +146,32 @@ h1 {
 }
 
 .cell.correct {
+  --reveal-color: var(--color-success);
+
   background: var(--color-success);
   border-color: var(--color-success);
   color: white;
 }
 .cell.incorrect {
+  --reveal-color: var(--color-gray-300);
+
   background: var(--color-gray-300);
   border-color: var(--color-gray-300);
   color: white;
 }
 .cell.misplaced {
+  --reveal-color: var(--color-warning);
+
   background: var(--color-warning);
   border-color: var(--color-warning);
   color: white;
+}
+
+.cell.revealed {
+  animation: tileReveal 600ms cubic-bezier(0.25, 0.8, 0.35, 1.2)
+    var(--reveal-delay) both;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .guess-input-wrapper {
@@ -259,5 +272,41 @@ h1 {
   }
   to {
     transform: translateY(0%);
+  }
+}
+
+@keyframes tileReveal {
+  0% {
+    background: var(--color-background);
+    border-color: var(--color-gray-700);
+    color: var(--color-text);
+    transform: rotateX(0deg) scale(1);
+  }
+  49% {
+    background: var(--color-background);
+    border-color: var(--color-gray-700);
+    color: var(--color-text);
+    transform: rotateX(90deg) scale(0.95);
+  }
+  50% {
+    background: var(--reveal-color);
+    border-color: var(--reveal-color);
+    color: white;
+    transform: rotateX(-90deg) scale(0.95);
+  }
+  75% {
+    transform: rotateX(15deg) scale(1.08);
+  }
+  100% {
+    background: var(--reveal-color);
+    border-color: var(--reveal-color);
+    color: white;
+    transform: rotateX(0deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell.revealed {
+    animation: none;
   }
 }

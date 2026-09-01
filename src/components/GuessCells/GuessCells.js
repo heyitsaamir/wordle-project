@@ -16,7 +16,11 @@ function GuessCells({guess, answer}) {
   return (
     <p className="guess">
       {range(5).map((index) => (
-        <span key={index} className={className(index)}>
+        <span
+          key={index}
+          className={`${className(index)}${results ? " revealed" : ""}`}
+          style={{ "--reveal-delay": `${index * 120}ms` }}
+        >
           { guess ? guess[index] : undefined}
         </span>
       ))}
