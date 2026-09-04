@@ -23,6 +23,7 @@ function GuessForm({ addToGuessList, disableForm = false}) {
         required
         id="guess-input"
         type="text"
+        placeholder="Summon a five-letter word..."
         value={guess}
         onChange={event => setGuess(event.target.value.toUpperCase())}
         maxLength={5}
