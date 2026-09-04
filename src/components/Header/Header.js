@@ -25,8 +25,11 @@ function Header() {
 
   return (
     <header>
-      <div className="side" />
-      <h1>Word Game</h1>
+      <div className="side header-pumpkin" aria-hidden="true">🎃</div>
+      <div className="brand">
+        <h1>Haunted Wordle</h1>
+        <p>Six guesses before midnight</p>
+      </div>
       <div className="side">
         <button
           className="theme-toggle-btn"
@@ -35,7 +38,7 @@ function Header() {
             theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
           }
         >
-          {theme === 'dark' ? '☀️' : '🌙'}
+          {theme === 'dark' ? '🕯️' : '🌙'}
         </button>
       </div>
     </header>
