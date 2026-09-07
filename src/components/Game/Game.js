@@ -38,6 +38,7 @@ function Game() {
 
   function resetGame() {
     setGuessListIndex(0)
+    setGuessList(range(NUM_OF_GUESSES_ALLOWED).map(() => ""))
     setIsGameWon(false)
     setIsGameLost(false)
     setDisableForm(false)
