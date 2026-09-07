@@ -25,12 +25,14 @@ function Game() {
     setGuessListIndex(guessListIndex + 1)
     setGuessList(newGuessList)
 
-    if (guess === answer) {
+    const isCorrectGuess = guess === answer
+
+    if (isCorrectGuess) {
       setIsGameWon(true)
       setDisableForm(true)
     }
 
-    if (!isGameWon && guessListIndex + 1 === NUM_OF_GUESSES_ALLOWED) {
+    if (!isCorrectGuess && guessListIndex + 1 === NUM_OF_GUESSES_ALLOWED) {
       setIsGameLost(true)
       setDisableForm(true)
     }
