@@ -11,7 +11,6 @@ function GuessForm({ addToGuessList, disableForm = false}) {
       return window.alert("Guess must have exactly 5 A-Z characters")
     }
 
-    console.info({ guess });
     addToGuessList(guess)
     setGuess("")
   }

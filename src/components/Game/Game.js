@@ -17,8 +17,6 @@ function Game() {
   const [isGameLost, setIsGameLost] = React.useState(false)
   const [disableForm, setDisableForm] = React.useState(false)
 
-  console.info({ answer });
-
   function addToGuessList(guess) {
     const newGuessList = [...guessList]
     newGuessList[guessListIndex] = guess
