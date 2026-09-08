@@ -2,7 +2,7 @@ import React from 'react';
 
 function GuessForm({ addToGuessList, disableForm = false}) {
   const [guess, setGuess] = React.useState("")
-  const validateLength = /([A-Z]){5}/g
+  const validateLength = /^[A-Z]{5}$/
 
   function handleSubmit(event) {
     event.preventDefault()
