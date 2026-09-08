@@ -1,6 +1,6 @@
 import React from 'react';
 import { range } from '../../utils';
-import { checkGuess } from '/src/game-helpers.js'
+import { checkGuess } from '../../game-helpers.js'
 
 function GuessCells({guess, answer}) {
   const results = checkGuess(guess, answer)
