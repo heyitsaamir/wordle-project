@@ -38,6 +38,20 @@ html[data-theme='dark'] {
   --color-text: hsl(0deg 0% 92%);
 }
 
+html[data-theme='ocean'] {
+  --color-success: hsl(165deg 65% 38%);
+  --color-warning: hsl(38deg 90% 50%);
+  --color-error: hsl(6deg 75% 58%);
+  --color-gray-100: hsl(200deg 30% 85%);
+  --color-gray-300: hsl(200deg 25% 60%);
+  --color-gray-500: hsl(200deg 20% 45%);
+  --color-gray-700: hsl(200deg 35% 28%);
+  --color-gray-900: hsl(205deg 45% 14%);
+
+  --color-background: hsl(205deg 55% 10%);
+  --color-text: hsl(190deg 45% 94%);
+}
+
 /*
   Custom styles
 */
