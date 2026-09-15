@@ -1,41 +1,47 @@
 import React from 'react';
+import { useTheme } from '../../theme-context';
 
-function getInitialTheme() {
-  const stored = window.localStorage.getItem('theme');
-  if (stored === 'dark' || stored === 'light') {
-    return stored;
-  }
+const NEXT_THEME_LABEL = {
+  dark: 'dark',
+  eid: 'Eid',
+  light: 'light',
+};
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
+const NEXT_THEME_ICON = {
+  dark: '🌙',
+  eid: '🌙✨',
+  light: '☀️',
+};
+
+function nextThemeOf(theme) {
+  if (theme === 'light') return 'dark';
+  if (theme === 'dark') return 'eid';
+  return 'light';
 }
 
 function Header() {
-  const [theme, setTheme] = React.useState(getInitialTheme);
-
-  React.useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    window.localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  function toggleTheme() {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  }
+  const { theme, cycleTheme } = useTheme();
+  const next = nextThemeOf(theme);
 
   return (
     <header>
       <div className="side" />
-      <h1>Word Game</h1>
+      <h1>
+        Word Game
+        {theme === 'eid' && (
+          <span className="eid-title-decoration" aria-hidden="true">
+            {' '}
+            🌙✨
+          </span>
+        )}
+      </h1>
       <div className="side">
         <button
           className="theme-toggle-btn"
-          onClick={toggleTheme}
-          aria-label={
-            theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-          }
+          onClick={cycleTheme}
+          aria-label={`Switch to ${NEXT_THEME_LABEL[next]} mode`}
         >
-          {theme === 'dark' ? '☀️' : '🌙'}
+          {NEXT_THEME_ICON[next]}
         </button>
       </div>
     </header>

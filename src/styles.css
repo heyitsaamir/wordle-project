@@ -39,6 +39,187 @@ html[data-theme='dark'] {
 }
 
 /*
+  Eid theme: deep emerald green + gold, evoking crescent moons,
+  lanterns and festive Eid decor.
+*/
+html[data-theme='eid'] {
+  --color-success: hsl(158deg 64% 30%);
+  --color-warning: hsl(42deg 88% 48%);
+  --color-error: hsl(0deg 65% 48%);
+  --color-gray-100: hsl(160deg 25% 14%);
+  --color-gray-300: hsl(160deg 18% 32%);
+  --color-gray-500: hsl(150deg 12% 50%);
+  --color-gray-700: hsl(44deg 45% 68%);
+  --color-gray-900: hsl(150deg 32% 94%);
+
+  --color-background: hsl(150deg 35% 97%);
+  --color-text: hsl(160deg 45% 15%);
+}
+
+html[data-theme='eid'] body {
+  background-image: radial-gradient(circle at 12% 18%, hsl(42deg 90% 65% / 55%) 0px, transparent 2.5px),
+    radial-gradient(circle at 82% 12%, hsl(42deg 90% 65% / 45%) 0px, transparent 2.5px),
+    radial-gradient(circle at 68% 82%, hsl(42deg 90% 65% / 45%) 0px, transparent 2.5px),
+    radial-gradient(circle at 24% 72%, hsl(42deg 90% 65% / 40%) 0px, transparent 2.5px),
+    radial-gradient(circle at 92% 55%, hsl(42deg 90% 65% / 35%) 0px, transparent 2.5px),
+    radial-gradient(circle at 6% 50%, hsl(42deg 90% 65% / 35%) 0px, transparent 2.5px);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+html[data-theme='eid'] header {
+  border-bottom: 2px solid hsl(42deg 80% 55%);
+}
+
+html[data-theme='eid'] .eid-title-decoration {
+  display: inline-block;
+  filter: drop-shadow(0 0 4px hsl(42deg 90% 60% / 60%));
+  animation: eid-title-glow 2.4s ease-in-out infinite;
+}
+
+html[data-theme='eid'] .cell.correct {
+  background: linear-gradient(135deg, hsl(158deg 60% 30%), hsl(158deg 70% 20%));
+  border-color: hsl(42deg 80% 55%);
+  animation: eid-cell-reveal 550ms ease-out;
+}
+
+html[data-theme='eid'] .cell.misplaced {
+  background: linear-gradient(135deg, hsl(42deg 88% 52%), hsl(35deg 90% 44%));
+  border-color: hsl(42deg 88% 52%);
+  color: hsl(160deg 45% 12%);
+  animation: eid-cell-reveal 550ms ease-out;
+}
+
+html[data-theme='eid'] .happy.eid.banner {
+  overflow: hidden;
+  background: linear-gradient(
+    120deg,
+    hsl(158deg 55% 28%) 0%,
+    hsl(42deg 80% 45%) 45%,
+    hsl(158deg 55% 28%) 100%
+  );
+  background-size: 220% 220%;
+  border-top: 3px solid hsl(42deg 90% 65%);
+  animation: eid-banner-shimmer 4s ease-in-out infinite;
+}
+
+/*
+  Ambient sparkle field: twinkling stars/crescents that drift softly
+  behind the game content while the Eid theme is active.
+*/
+.eid-sparkles {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.eid-sparkle {
+  position: absolute;
+  opacity: 0;
+  line-height: 1;
+  filter: drop-shadow(0 0 4px hsl(42deg 90% 65% / 70%));
+  animation-name: eid-sparkle-twinkle;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  will-change: transform, opacity;
+}
+
+/*
+  Celebratory sparkle burst shown around the win banner text.
+*/
+.eid-banner-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.eid-banner-sparkle {
+  position: absolute;
+  font-size: 1.25rem;
+  opacity: 0;
+  animation: eid-banner-sparkle-pop 1.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px hsl(0deg 0% 100% / 70%));
+}
+
+@keyframes eid-sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4) translateY(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) translateY(-14px) rotate(180deg);
+  }
+}
+
+@keyframes eid-banner-sparkle-pop {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.3) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15) rotate(160deg);
+  }
+}
+
+@keyframes eid-cell-reveal {
+  0% {
+    transform: scale(0.85);
+    box-shadow: 0 0 0 0 hsl(42deg 90% 60% / 0%);
+  }
+  55% {
+    transform: scale(1.08);
+    box-shadow: 0 0 18px 4px hsl(42deg 90% 60% / 65%);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 hsl(42deg 90% 60% / 0%);
+  }
+}
+
+@keyframes eid-banner-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes eid-title-glow {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+    filter: drop-shadow(0 0 3px hsl(42deg 90% 60% / 50%));
+  }
+  50% {
+    transform: rotate(6deg);
+    filter: drop-shadow(0 0 7px hsl(42deg 90% 60% / 85%));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eid-sparkle,
+  .eid-banner-sparkle,
+  html[data-theme='eid'] .eid-title-decoration,
+  html[data-theme='eid'] .cell.correct,
+  html[data-theme='eid'] .cell.misplaced,
+  html[data-theme='eid'] .happy.eid.banner {
+    animation: none;
+  }
+
+  .eid-sparkle {
+    opacity: 0.6;
+  }
+}
+
+/*
   Custom styles
 */
 body {
@@ -62,6 +243,8 @@ button {
 }
 
 .wrapper {
+  position: relative;
+  z-index: 0;
   display: flex;
   flex-direction: column;
   min-height: 100%;
