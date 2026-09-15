@@ -1,8 +1,20 @@
 import React from 'react';
 
+const THEME_ORDER = ['light', 'dark', 'halloween'];
+const THEME_ICONS = {
+  light: '☀️',
+  dark: '🌙',
+  halloween: '🎃',
+};
+
+function getNextTheme(theme) {
+  const index = THEME_ORDER.indexOf(theme);
+  return THEME_ORDER[(index + 1) % THEME_ORDER.length];
+}
+
 function getInitialTheme() {
   const stored = window.localStorage.getItem('theme');
-  if (stored === 'dark' || stored === 'light') {
+  if (THEME_ORDER.includes(stored)) {
     return stored;
   }
 
@@ -20,8 +32,10 @@ function Header() {
   }, [theme]);
 
   function toggleTheme() {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    setTheme(getNextTheme);
   }
+
+  const next = getNextTheme(theme);
 
   return (
     <header>
@@ -31,11 +45,9 @@ function Header() {
         <button
           className="theme-toggle-btn"
           onClick={toggleTheme}
-          aria-label={
-            theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-          }
+          aria-label={`Switch to ${next} mode`}
         >
-          {theme === 'dark' ? '☀️' : '🌙'}
+          {THEME_ICONS[next]}
         </button>
       </div>
     </header>
