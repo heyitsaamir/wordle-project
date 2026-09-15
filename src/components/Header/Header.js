@@ -1,41 +1,41 @@
 import React from 'react';
 
-function getInitialTheme() {
-  const stored = window.localStorage.getItem('theme');
-  if (stored === 'dark' || stored === 'light') {
-    return stored;
-  }
+import { getNextTheme } from '../../theme';
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
-}
+const THEME_ICON = {
+  light: '🌙',
+  dark: '🎄',
+  christmas: '☀️',
+};
 
-function Header() {
-  const [theme, setTheme] = React.useState(getInitialTheme);
+const THEME_LABEL = {
+  light: 'Switch to dark mode',
+  dark: 'Switch to Christmas theme',
+  christmas: 'Switch to light mode',
+};
 
-  React.useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    window.localStorage.setItem('theme', theme);
-  }, [theme]);
-
+function Header({ theme, setTheme }) {
   function toggleTheme() {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    setTheme(getNextTheme(theme));
   }
 
   return (
     <header>
-      <div className="side" />
+      <div className="side">
+        {theme === 'christmas' ? (
+          <span className="header-tree" aria-hidden="true">
+            🎄
+          </span>
+        ) : null}
+      </div>
       <h1>Word Game</h1>
       <div className="side">
         <button
           className="theme-toggle-btn"
           onClick={toggleTheme}
-          aria-label={
-            theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-          }
+          aria-label={THEME_LABEL[theme]}
         >
-          {theme === 'dark' ? '☀️' : '🌙'}
+          {THEME_ICON[theme]}
         </button>
       </div>
     </header>
