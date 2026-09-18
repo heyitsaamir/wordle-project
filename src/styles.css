@@ -18,10 +18,15 @@ html {
 
   --color-background: hsl(0deg 0% 100%);
   --color-text: hsl(0deg 0% 10%);
+  --background-image: none;
+  --cell-glow: none;
 
   background: var(--color-background);
+  background-image: var(--background-image);
+  background-attachment: fixed;
   color: var(--color-text);
   transition: background 200ms ease, color 200ms ease;
+  color-scheme: light;
 }
 
 html[data-theme='dark'] {
@@ -36,6 +41,36 @@ html[data-theme='dark'] {
 
   --color-background: hsl(0deg 0% 8%);
   --color-text: hsl(0deg 0% 92%);
+
+  color-scheme: dark;
+}
+
+html[data-theme='moon'] {
+  --color-success: hsl(168deg 58% 32%);
+  --color-warning: hsl(43deg 88% 36%);
+  --color-error: hsl(344deg 68% 48%);
+  --color-gray-100: hsl(225deg 38% 90%);
+  --color-gray-300: hsl(226deg 28% 72%);
+  --color-gray-500: hsl(229deg 20% 52%);
+  --color-gray-700: hsl(232deg 24% 31%);
+  --color-gray-900: hsl(234deg 31% 15%);
+
+  --color-background: hsl(234deg 39% 8%);
+  --color-text: hsl(225deg 42% 92%);
+  --background-image:
+    radial-gradient(
+      circle at 50% -15%,
+      hsl(219deg 54% 28% / 0.82),
+      transparent 48%
+    ),
+    radial-gradient(
+      circle at 82% 20%,
+      hsl(267deg 42% 25% / 0.38),
+      transparent 32%
+    );
+  --cell-glow: 0 0 14px hsl(218deg 74% 72% / 0.1);
+
+  color-scheme: dark;
 }
 
 /*
@@ -126,6 +161,7 @@ h1 {
   border: 2px solid var(--color-gray-700);
   border-radius: var(--radius);
   font-size: 2rem;
+  box-shadow: var(--cell-glow);
 }
 
 /*
@@ -190,6 +226,10 @@ h1 {
   width: 100%;
   height: 100%;
   font-size: 1.5rem;
+}
+
+html[data-theme='moon'] .theme-toggle-btn {
+  text-shadow: 0 0 12px hsl(47deg 100% 78% / 0.7);
 }
 
 .banner {

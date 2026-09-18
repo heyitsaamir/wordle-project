@@ -1,8 +1,23 @@
 import React from 'react';
 
+const THEMES = {
+  light: {
+    next: 'dark',
+    icon: '🌑',
+  },
+  dark: {
+    next: 'moon',
+    icon: '🌙',
+  },
+  moon: {
+    next: 'light',
+    icon: '☀️',
+  },
+};
+
 function getInitialTheme() {
   const stored = window.localStorage.getItem('theme');
-  if (stored === 'dark' || stored === 'light') {
+  if (Object.prototype.hasOwnProperty.call(THEMES, stored)) {
     return stored;
   }
 
@@ -19,9 +34,11 @@ function Header() {
     window.localStorage.setItem('theme', theme);
   }, [theme]);
 
-  function toggleTheme() {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  function cycleTheme() {
+    setTheme((currentTheme) => THEMES[currentTheme].next);
   }
+
+  const nextTheme = THEMES[theme].next;
 
   return (
     <header>
@@ -30,12 +47,11 @@ function Header() {
       <div className="side">
         <button
           className="theme-toggle-btn"
-          onClick={toggleTheme}
-          aria-label={
-            theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-          }
+          onClick={cycleTheme}
+          aria-label={`Switch to ${nextTheme} theme`}
+          title={`Current theme: ${theme}`}
         >
-          {theme === 'dark' ? '☀️' : '🌙'}
+          {THEMES[theme].icon}
         </button>
       </div>
     </header>
