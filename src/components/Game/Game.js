@@ -17,8 +17,6 @@ function Game() {
   const [isGameLost, setIsGameLost] = React.useState(false)
   const [disableForm, setDisableForm] = React.useState(false)
 
-  console.info({ answer });
-
   function addToGuessList(guess) {
     const newGuessList = [...guessList]
     newGuessList[guessListIndex] = guess
@@ -37,6 +35,7 @@ function Game() {
   }
 
   function resetGame() {
+    setGuessList(range(NUM_OF_GUESSES_ALLOWED).map(() => ""))
     setGuessListIndex(0)
     setIsGameWon(false)
     setIsGameLost(false)
@@ -46,7 +45,15 @@ function Game() {
 
   return (
     <>
-      {isGameWon || isGameLost ? <ResultsBanner isGameWon={isGameWon} answer={answer} guessListIndex={guessListIndex} resetGame={resetGame} /> : null}
+      {isGameWon || isGameLost ? (
+        <ResultsBanner
+          isGameWon={isGameWon}
+          answer={answer}
+          guessList={guessList}
+          guessListIndex={guessListIndex}
+          resetGame={resetGame}
+        />
+      ) : null}
       <GuessResults guessList={guessList} answer={answer} />
       <GuessForm addToGuessList={addToGuessList} disableForm={disableForm} />
     </>
