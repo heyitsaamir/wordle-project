@@ -40,12 +40,20 @@
         display: grid;
         min-height: calc(100vh - 4rem);
         place-items: center;
-        padding: 32px 16px;
+        padding: 40px 24px;
+      }
+
+      .preview-layout {
+        display: grid;
+        grid-template-columns: minmax(360px, 500px) minmax(360px, 480px);
+        align-items: center;
+        gap: 48px;
+        width: min(100%, 1028px);
       }
 
       .game {
         display: grid;
-        width: min(100%, 430px);
+        width: 100%;
         gap: 4px;
       }
 
@@ -78,20 +86,13 @@
       }
 
       .result-card {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: min(100%, 600px);
-        margin: auto;
+        width: 100%;
         padding: 28px;
-        border-radius: 12px 12px 0 0;
+        border-radius: 12px;
         background: #4cbb17;
-        box-shadow: 0 -12px 40px rgb(0 0 0 / 18%);
+        box-shadow: 0 16px 40px rgb(0 0 0 / 18%);
         color: white;
         text-align: center;
-        max-height: calc(100vh - 16px);
-        overflow-y: auto;
       }
 
       .result-card h2 {
@@ -148,6 +149,18 @@
         font-weight: 700;
       }
 
+      @media (max-width: 850px) {
+        main {
+          padding: 32px 16px;
+        }
+
+        .preview-layout {
+          grid-template-columns: minmax(0, 500px);
+          justify-content: center;
+          gap: 32px;
+        }
+      }
+
       @media (max-width: 400px) {
         .actions {
           flex-direction: column;
@@ -162,34 +175,34 @@
       <span></span>
     </header>
     <main aria-label="Completed Word Game">
-      <div class="game" aria-label="Completed guesses with letters hidden">
-        <div class="guess">
-          <span class="tile incorrect"></span>
-          <span class="tile misplaced"></span>
-          <span class="tile incorrect"></span>
-          <span class="tile incorrect"></span>
-          <span class="tile misplaced"></span>
+      <div class="preview-layout">
+        <div class="game" aria-label="Completed guesses with letters hidden">
+          <div class="guess">
+            <span class="tile incorrect"></span>
+            <span class="tile misplaced"></span>
+            <span class="tile incorrect"></span>
+            <span class="tile incorrect"></span>
+            <span class="tile misplaced"></span>
+          </div>
+          <div class="guess">
+            <span class="tile correct"></span>
+            <span class="tile correct"></span>
+            <span class="tile incorrect"></span>
+            <span class="tile misplaced"></span>
+            <span class="tile correct"></span>
+          </div>
+          <div class="guess">
+            <span class="tile correct"></span>
+            <span class="tile correct"></span>
+            <span class="tile correct"></span>
+            <span class="tile correct"></span>
+            <span class="tile correct"></span>
+          </div>
         </div>
-        <div class="guess">
-          <span class="tile correct"></span>
-          <span class="tile correct"></span>
-          <span class="tile incorrect"></span>
-          <span class="tile misplaced"></span>
-          <span class="tile correct"></span>
-        </div>
-        <div class="guess">
-          <span class="tile correct"></span>
-          <span class="tile correct"></span>
-          <span class="tile correct"></span>
-          <span class="tile correct"></span>
-          <span class="tile correct"></span>
-        </div>
-      </div>
-    </main>
-    <section class="result-card" aria-labelledby="result-title">
-      <h2 id="result-title">Congratulations! Got it in 3 guesses.</h2>
-      <p>Challenge a friend without giving away the answer.</p>
-      <pre id="share-text">
+        <section class="result-card" aria-labelledby="result-title">
+          <h2 id="result-title">Congratulations! Got it in 3 guesses.</h2>
+          <p>Challenge a friend without giving away the answer.</p>
+          <pre id="share-text">
 Word Game - Solved
 Attempts: 3/6
 
@@ -198,15 +211,17 @@ Attempts: 3/6
 🟩🟩🟩🟩🟩
 
 Can you beat my score?</pre
-      >
-      <div class="actions">
-        <button class="share" id="share-button" type="button">
-          Share challenge
-        </button>
-        <button class="replay" type="button">Play again</button>
+          >
+          <div class="actions">
+            <button class="share" id="share-button" type="button">
+              Share challenge
+            </button>
+            <button class="replay" type="button">Play again</button>
+          </div>
+          <p id="status" aria-live="polite"></p>
+        </section>
       </div>
-      <p id="status" aria-live="polite"></p>
-    </section>
+    </main>
     <script>
       const shareButton = document.querySelector("#share-button");
       const shareText = document
