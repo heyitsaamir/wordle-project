@@ -194,6 +194,7 @@ h1 {
 
 .banner {
   position: fixed;
+  z-index: 2;
   left: 0;
   right: 0;
   bottom: 0;
@@ -205,6 +206,27 @@ h1 {
   animation: slideUp 750ms cubic-bezier(0, 0.72, 0.24, 1.02);
   border-radius: 4px 4px 0px 0px;
   will-change: transform;
+}
+
+.confetti {
+  position: fixed;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti-particle {
+  position: absolute;
+  top: -24px;
+  left: var(--confetti-left);
+  width: 10px;
+  height: 16px;
+  background: var(--confetti-color);
+  opacity: 0;
+  animation: confettiFall var(--confetti-duration) ease-out
+    var(--confetti-delay) forwards;
+  will-change: transform, opacity;
 }
 
 .banner > p:first-child {
@@ -275,6 +297,12 @@ h1 {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+}
+
 .visually-hidden {
   position: absolute;
   overflow: hidden;
@@ -284,6 +312,22 @@ h1 {
   margin: -1px;
   padding: 0;
   border: 0;
+}
+
+@keyframes confettiFall {
+  10% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(var(--confetti-drift), 105vh, 0)
+      rotate(var(--confetti-spin));
+    opacity: 0;
+  }
 }
 
 /*

@@ -87,7 +87,46 @@
       </div>
     </div>
 
+    <div class="confetti" aria-hidden="true" id="confetti"></div>
+
     <script>
+      const confetti = document.querySelector("#confetti");
+      const confettiColors = [
+        "#ff4d6d",
+        "#ffd60a",
+        "#4cc9f0",
+        "#b5179e",
+        "#80ed99",
+        "#ff9f1c",
+      ];
+
+      Array.from({ length: 48 }, (_, index) => {
+        const particle = document.createElement("span");
+        particle.className = "confetti-particle";
+        particle.style.setProperty(
+          "--confetti-color",
+          confettiColors[index % confettiColors.length]
+        );
+        particle.style.setProperty(
+          "--confetti-delay",
+          `${(index * 47) % 500}ms`
+        );
+        particle.style.setProperty(
+          "--confetti-drift",
+          `${((index * 29) % 31) - 15}vw`
+        );
+        particle.style.setProperty(
+          "--confetti-duration",
+          `${1800 + ((index * 83) % 900)}ms`
+        );
+        particle.style.setProperty("--confetti-left", `${(index * 37) % 100}%`);
+        particle.style.setProperty(
+          "--confetti-spin",
+          `${360 + ((index * 71) % 540)}deg`
+        );
+        confetti.appendChild(particle);
+      });
+
       const shareText = [
         "Word Game 3/6",
         "Can you beat my score?",
