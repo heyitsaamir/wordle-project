@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Word Game sharing preview</title>
+    <link rel="stylesheet" href="../src/reset.css" />
+    <link rel="stylesheet" href="../src/styles.css" />
+  </head>
+  <body>
+    <div id="root">
+      <div class="wrapper">
+        <header>
+          <div class="side"></div>
+          <h1>Word Game</h1>
+          <div class="side"></div>
+        </header>
+
+        <main class="game-wrapper">
+          <div class="guess-results" aria-label="Completed guess grid">
+            <p class="guess">
+              <span class="cell incorrect">R</span>
+              <span class="cell misplaced">A</span>
+              <span class="cell misplaced">T</span>
+              <span class="cell incorrect">E</span>
+              <span class="cell incorrect">S</span>
+            </p>
+            <p class="guess">
+              <span class="cell correct">A</span>
+              <span class="cell correct">B</span>
+              <span class="cell correct">O</span>
+              <span class="cell incorrect">V</span>
+              <span class="cell incorrect">E</span>
+            </p>
+            <p class="guess">
+              <span class="cell correct">A</span>
+              <span class="cell correct">B</span>
+              <span class="cell correct">O</span>
+              <span class="cell correct">U</span>
+              <span class="cell correct">T</span>
+            </p>
+            <p class="guess">
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+            </p>
+            <p class="guess">
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+            </p>
+            <p class="guess">
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+            </p>
+          </div>
+
+          <div class="happy banner">
+            <p>
+              <strong>Congratulations!</strong> Got it in
+              <strong>3 guesses</strong>.
+            </p>
+            <p class="challenge-copy">
+              Challenge a friend without revealing the answer.
+            </p>
+            <div class="result-actions">
+              <button class="share-button" id="share-button">
+                Share challenge
+              </button>
+              <button class="play-again-button">Play again</button>
+            </div>
+            <p
+              class="share-status"
+              id="share-status"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div class="confetti" aria-hidden="true" id="confetti"></div>
+
+    <script>
+      const confetti = document.querySelector("#confetti");
+      const confettiColors = [
+        "#ff4d6d",
+        "#ffd60a",
+        "#4cc9f0",
+        "#b5179e",
+        "#80ed99",
+        "#ff9f1c",
+      ];
+
+      Array.from({ length: 48 }, (_, index) => {
+        const particle = document.createElement("span");
+        particle.className = "confetti-particle";
+        particle.style.setProperty(
+          "--confetti-color",
+          confettiColors[index % confettiColors.length]
+        );
+        particle.style.setProperty(
+          "--confetti-delay",
+          `${(index * 47) % 500}ms`
+        );
+        particle.style.setProperty(
+          "--confetti-drift",
+          `${((index * 29) % 31) - 15}vw`
+        );
+        particle.style.setProperty(
+          "--confetti-duration",
+          `${1800 + ((index * 83) % 900)}ms`
+        );
+        particle.style.setProperty("--confetti-left", `${(index * 37) % 100}%`);
+        particle.style.setProperty(
+          "--confetti-spin",
+          `${360 + ((index * 71) % 540)}deg`
+        );
+        confetti.appendChild(particle);
+      });
+
+      const shareText = [
+        "Word Game 3/6",
+        "Can you beat my score?",
+        "",
+        "⬛🟨🟨⬛⬛",
+        "🟩🟩🟩⬛⬛",
+        "🟩🟩🟩🟩🟩",
+      ].join("\n");
+
+      document
+        .querySelector("#share-button")
+        .addEventListener("click", async () => {
+          const status = document.querySelector("#share-status");
+
+          try {
+            await navigator.clipboard.writeText(shareText);
+            status.textContent = "Result copied! Send it to a friend.";
+          } catch (error) {
+            status.textContent =
+              "Preview: the live game opens your device share sheet.";
+          }
+        });
+    </script>
+  </body>
+</html>
