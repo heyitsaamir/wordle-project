@@ -1,73 +1,400 @@
-<div id="root">
-  <div class="wrapper">
-    <header>
-      <div class="side"></div>
-      <h1>Word Game</h1>
-      <div class="side">
-        <!--
-          Help button
-          (code omitted for brevity)
-        -->
-      </div>
-    </header>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Word Game — Share your result</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --kelly: #2e8f3c;
+        --kelly-dark: #1f6b2b;
+        --kelly-soft: #e9f5e8;
+        --ink: #162018;
+        --muted: #667269;
+        --line: #dfe5df;
+        --paper: #ffffff;
+        --canvas: #f3f6f1;
+        --yellow: #c5a52e;
+        --miss: #6d746f;
+      }
 
-    <div class="game-wrapper">
-      <div class="guess-results">
-        <p class="guess">
-          <span class="cell incorrect">R</span>
-          <span class="cell misplaced">A</span>
-          <span class="cell misplaced">T</span>
-          <span class="cell incorrect">E</span>
-          <span class="cell incorrect">S</span>
-        </p>
-        <p class="guess">
-          <span class="cell correct">A</span>
-          <span class="cell correct">B</span>
-          <span class="cell correct">O</span>
-          <span class="cell incorrect">V</span>
-          <span class="cell incorrect">E</span>
-        </p>
-        <p class="guess">
-          <span class="cell correct">A</span>
-          <span class="cell correct">B</span>
-          <span class="cell correct">O</span>
-          <span class="cell correct">U</span>
-          <span class="cell correct">T</span>
-        </p>
-        <p class="guess">
-          <span class="cell"></span>
-          <span class="cell"></span>
-          <span class="cell"></span>
-          <span class="cell"></span>
-          <span class="cell"></span>
-        </p>
-        <p class="guess">
-          <span class="cell"></span>
-          <span class="cell"></span>
-          <span class="cell"></span>
-          <span class="cell"></span>
-          <span class="cell"></span>
-        </p>
-        <p class="guess">
-          <span class="cell"></span>
-          <span class="cell"></span>
-          <span class="cell"></span>
-          <span class="cell"></span>
-          <span class="cell"></span>
-        </p>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 40px 20px;
+        background: radial-gradient(
+            circle at 50% -10%,
+            #ffffff 0,
+            transparent 42%
+          ),
+          var(--canvas);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+          BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .page {
+        width: min(100%, 460px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 22px;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .brand-mark {
+        width: 24px;
+        height: 24px;
+        display: grid;
+        place-items: center;
+        border-radius: 6px;
+        background: var(--kelly);
+        color: white;
+        font-size: 13px;
+        box-shadow: 0 4px 10px rgb(46 143 60 / 20%);
+      }
+
+      .result-card {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--paper);
+        box-shadow: 0 22px 55px rgb(25 48 29 / 9%), 0 2px 8px rgb(25 48 29 / 5%);
+      }
+
+      .success-strip {
+        height: 7px;
+        background: var(--kelly);
+      }
+
+      .content {
+        padding: 34px 34px 30px;
+        text-align: center;
+      }
+
+      .check {
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: var(--kelly-soft);
+        color: var(--kelly-dark);
+      }
+
+      .check svg {
+        width: 26px;
+        height: 26px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--kelly-dark);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(28px, 7vw, 36px);
+        line-height: 1.1;
+        letter-spacing: -0.035em;
+      }
+
+      .score {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .score strong {
+        color: var(--ink);
+      }
+
+      .share-preview {
+        margin: 28px 0;
+        padding: 22px;
+        border: 1px solid #dce8da;
+        border-radius: 16px;
+        background: #f8fbf7;
+      }
+
+      .preview-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 750;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .attempts {
+        color: var(--kelly-dark);
+      }
+
+      .grid {
+        display: grid;
+        gap: 5px;
+        width: 166px;
+        margin: 0 auto;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+      }
+
+      .tile {
+        aspect-ratio: 1;
+        border-radius: 5px;
+        background: var(--miss);
+        box-shadow: inset 0 -2px rgb(0 0 0 / 12%);
+      }
+
+      .tile.correct {
+        background: var(--kelly);
+      }
+
+      .tile.present {
+        background: var(--yellow);
+      }
+
+      .spoiler-note {
+        display: flex;
+        justify-content: center;
+        gap: 7px;
+        margin: 17px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .actions {
+        display: grid;
+        gap: 10px;
+      }
+
+      button {
+        width: 100%;
+        min-height: 50px;
+        border: 0;
+        border-radius: 12px;
+        font: inherit;
+        font-weight: 750;
+        cursor: pointer;
+      }
+
+      .share {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        background: var(--kelly);
+        color: white;
+        box-shadow: 0 8px 18px rgb(46 143 60 / 22%);
+        transition: background 150ms ease, transform 150ms ease,
+          box-shadow 150ms ease;
+      }
+
+      .share:hover {
+        background: var(--kelly-dark);
+        box-shadow: 0 10px 22px rgb(46 143 60 / 27%);
+        transform: translateY(-1px);
+      }
+
+      .share:focus-visible,
+      .again:focus-visible {
+        outline: 3px solid rgb(46 143 60 / 30%);
+        outline-offset: 3px;
+      }
+
+      .again {
+        background: transparent;
+        color: var(--muted);
+      }
+
+      .again:hover {
+        color: var(--ink);
+        background: #f3f5f2;
+      }
+
+      .status {
+        min-height: 20px;
+        margin: 14px 0 -4px;
+        color: var(--kelly-dark);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .footer-note {
+        margin: 18px 0 0;
+        color: #859087;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      @media (max-width: 420px) {
+        body {
+          padding: 18px 12px;
+        }
+
+        .content {
+          padding: 28px 22px 24px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .share {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">W</span>
+        Word Game
       </div>
 
-      <form class="guess-input-wrapper">
-        <label for="guess-input">Enter guess:</label>
-        <input id="guess-input" type="text" />
-      </form>
+      <section class="result-card" aria-labelledby="result-title">
+        <div class="success-strip"></div>
+        <div class="content">
+          <div class="check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="m5 12.5 4.25 4.25L19.5 6.5"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
 
-      <div class="happy banner">
-        <p>
-          <strong>Congratulations!</strong> Got it in
-          <strong>3 guesses</strong>.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+          <p class="eyebrow">Puzzle complete</p>
+          <h1 id="result-title">Nice work!</h1>
+          <p class="score">
+            You solved it in <strong>3 of 6 attempts</strong>.
+          </p>
+
+          <div class="share-preview" aria-label="Spoiler-free result preview">
+            <div class="preview-heading">
+              <span>Your result</span>
+              <span class="attempts">3/6</span>
+            </div>
+            <div class="grid" aria-hidden="true">
+              <div class="row">
+                <span class="tile"></span>
+                <span class="tile present"></span>
+                <span class="tile present"></span>
+                <span class="tile"></span>
+                <span class="tile"></span>
+              </div>
+              <div class="row">
+                <span class="tile correct"></span>
+                <span class="tile correct"></span>
+                <span class="tile correct"></span>
+                <span class="tile"></span>
+                <span class="tile"></span>
+              </div>
+              <div class="row">
+                <span class="tile correct"></span>
+                <span class="tile correct"></span>
+                <span class="tile correct"></span>
+                <span class="tile correct"></span>
+                <span class="tile correct"></span>
+              </div>
+            </div>
+            <p class="spoiler-note">
+              <span aria-hidden="true">🔒</span>
+              The answer stays hidden
+            </p>
+          </div>
+
+          <div class="actions">
+            <button class="share" type="button" id="share-button">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              Share result
+            </button>
+            <button class="again" type="button">Play again</button>
+          </div>
+          <p
+            class="status"
+            id="share-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </div>
+      </section>
+      <p class="footer-note">
+        Challenge a friend without giving away the word.
+      </p>
+    </main>
+
+    <script>
+      const result = `Word Game 3/6
+
+⬛🟨🟨⬛⬛
+🟩🟩🟩⬛⬛
+🟩🟩🟩🟩🟩
+
+Can you beat my score?`;
+      const shareButton = document.querySelector("#share-button");
+      const shareStatus = document.querySelector("#share-status");
+
+      shareButton.addEventListener("click", async () => {
+        try {
+          if (navigator.share) {
+            await navigator.share({
+              title: "Word Game challenge",
+              text: result,
+            });
+            shareStatus.textContent = "Challenge shared!";
+          } else {
+            await navigator.clipboard.writeText(result);
+            shareStatus.textContent = "Copied! Send it to a friend.";
+          }
+        } catch (error) {
+          if (error.name !== "AbortError") {
+            shareStatus.textContent = "Your result is ready to share.";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
