@@ -46,7 +46,15 @@ function Game() {
 
   return (
     <>
-      {isGameWon || isGameLost ? <ResultsBanner isGameWon={isGameWon} answer={answer} guessListIndex={guessListIndex} resetGame={resetGame} /> : null}
+      {isGameWon || isGameLost ? (
+        <ResultsBanner
+          isGameWon={isGameWon}
+          answer={answer}
+          guessList={guessList}
+          guessListIndex={guessListIndex}
+          resetGame={resetGame}
+        />
+      ) : null}
       <GuessResults guessList={guessList} answer={answer} />
       <GuessForm addToGuessList={addToGuessList} disableForm={disableForm} />
     </>
