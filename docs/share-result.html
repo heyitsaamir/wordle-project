@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Word Game sharing preview</title>
+    <link rel="stylesheet" href="../src/reset.css" />
+    <link rel="stylesheet" href="../src/styles.css" />
+  </head>
+  <body>
+    <div id="root">
+      <div class="wrapper">
+        <header>
+          <div class="side"></div>
+          <h1>Word Game</h1>
+          <div class="side"></div>
+        </header>
+
+        <main class="game-wrapper">
+          <div class="guess-results" aria-label="Completed guess grid">
+            <p class="guess">
+              <span class="cell incorrect">R</span>
+              <span class="cell misplaced">A</span>
+              <span class="cell misplaced">T</span>
+              <span class="cell incorrect">E</span>
+              <span class="cell incorrect">S</span>
+            </p>
+            <p class="guess">
+              <span class="cell correct">A</span>
+              <span class="cell correct">B</span>
+              <span class="cell correct">O</span>
+              <span class="cell incorrect">V</span>
+              <span class="cell incorrect">E</span>
+            </p>
+            <p class="guess">
+              <span class="cell correct">A</span>
+              <span class="cell correct">B</span>
+              <span class="cell correct">O</span>
+              <span class="cell correct">U</span>
+              <span class="cell correct">T</span>
+            </p>
+            <p class="guess">
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+            </p>
+            <p class="guess">
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+            </p>
+            <p class="guess">
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+              <span class="cell"></span>
+            </p>
+          </div>
+
+          <div class="happy banner">
+            <p>
+              <strong>Congratulations!</strong> Got it in
+              <strong>3 guesses</strong>.
+            </p>
+            <p class="challenge-copy">
+              Challenge a friend without revealing the answer.
+            </p>
+            <div class="result-actions">
+              <button class="share-button" id="share-button">
+                Share challenge
+              </button>
+              <button class="play-again-button">Play again</button>
+            </div>
+            <p
+              class="share-status"
+              id="share-status"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const shareText = [
+        "Word Game 3/6",
+        "Can you beat my score?",
+        "",
+        "⬛🟨🟨⬛⬛",
+        "🟩🟩🟩⬛⬛",
+        "🟩🟩🟩🟩🟩",
+      ].join("\n");
+
+      document
+        .querySelector("#share-button")
+        .addEventListener("click", async () => {
+          const status = document.querySelector("#share-status");
+
+          try {
+            await navigator.clipboard.writeText(shareText);
+            status.textContent = "Result copied! Send it to a friend.";
+          } catch (error) {
+            status.textContent =
+              "Preview: the live game opens your device share sheet.";
+          }
+        });
+    </script>
+  </body>
+</html>
