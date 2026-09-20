@@ -216,7 +216,9 @@ Can you beat my score?</pre
             <button class="share" id="share-button" type="button">
               Share challenge
             </button>
-            <button class="replay" type="button">Play again</button>
+            <button class="replay" id="replay-button" type="button">
+              Play again
+            </button>
           </div>
           <p id="status" aria-live="polite"></p>
         </section>
@@ -224,21 +226,46 @@ Can you beat my score?</pre
     </main>
     <script>
       const shareButton = document.querySelector("#share-button");
+      const replayButton = document.querySelector("#replay-button");
       const shareText = document
         .querySelector("#share-text")
         .textContent.trim();
       const status = document.querySelector("#status");
+      const challengeUrl = new URL("../public/index.html", window.location.href)
+        .href;
 
       shareButton.addEventListener("click", async () => {
+        const shareData = {
+          title: "Word Game challenge",
+          text: shareText,
+          url: challengeUrl,
+        };
+
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+            status.textContent = "Challenge shared!";
+            return;
+          } catch (error) {
+            if (error.name === "AbortError") {
+              return;
+            }
+          }
+        }
+
         try {
           await navigator.clipboard.writeText(
-            `${shareText}\nhttps://example.com/word-game`
+            `${shareText}\n${challengeUrl}`
           );
           status.textContent = "Result and challenge link copied!";
         } catch (error) {
           status.textContent =
             "Select the result above to copy the challenge manually.";
         }
+      });
+
+      replayButton.addEventListener("click", () => {
+        window.location.assign(challengeUrl);
       });
     </script>
   </body>
