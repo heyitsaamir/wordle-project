@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Game - Share Result Preview</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        background: #f5f3ee;
+        color: #202124;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      header {
+        display: grid;
+        grid-template-columns: 4rem 1fr 4rem;
+        height: 4rem;
+        border-bottom: 1px solid #d0d0d0;
+        background: white;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2rem;
+        line-height: 4rem;
+        text-align: center;
+      }
+
+      main {
+        display: grid;
+        min-height: calc(100vh - 4rem);
+        place-items: center;
+        padding: 40px 24px;
+      }
+
+      .preview-layout {
+        display: grid;
+        grid-template-columns: minmax(360px, 500px) minmax(360px, 480px);
+        align-items: center;
+        gap: 48px;
+        width: min(100%, 1028px);
+      }
+
+      .game {
+        display: grid;
+        width: 100%;
+        gap: 4px;
+      }
+
+      .guess {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+      }
+
+      .tile {
+        aspect-ratio: 1;
+        border: 2px solid #d3d6da;
+        border-radius: 3px;
+        background: white;
+      }
+
+      .correct {
+        border-color: #538d4e;
+        background: #538d4e;
+      }
+
+      .misplaced {
+        border-color: #b59f3b;
+        background: #b59f3b;
+      }
+
+      .incorrect {
+        border-color: #3a3a3c;
+        background: #3a3a3c;
+      }
+
+      .result-card {
+        width: 100%;
+        padding: 28px;
+        border-radius: 12px;
+        background: #4cbb17;
+        box-shadow: 0 16px 40px rgb(0 0 0 / 18%);
+        color: white;
+        text-align: center;
+      }
+
+      .result-card h2 {
+        margin: 0 0 6px;
+        font-size: 1.35rem;
+      }
+
+      .result-card p {
+        margin: 0 0 14px;
+      }
+
+      pre {
+        width: fit-content;
+        min-width: 230px;
+        margin: 0 auto 16px;
+        padding: 12px 16px;
+        border-radius: 8px;
+        background: rgb(0 0 0 / 20%);
+        color: white;
+        font: 0.875rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+        text-align: left;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      button {
+        min-height: 44px;
+        padding: 10px 18px;
+        border: 2px solid white;
+        border-radius: 6px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .share {
+        background: white;
+        color: #202124;
+      }
+
+      .replay {
+        background: transparent;
+        color: white;
+      }
+
+      #status {
+        min-height: 1.25em;
+        margin: 10px 0 0;
+        font-size: 0.875rem;
+        font-weight: 700;
+      }
+
+      @media (max-width: 850px) {
+        main {
+          padding: 32px 16px;
+        }
+
+        .preview-layout {
+          grid-template-columns: minmax(0, 500px);
+          justify-content: center;
+          gap: 32px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .actions {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span></span>
+      <h1>Word Game</h1>
+      <span></span>
+    </header>
+    <main aria-label="Completed Word Game">
+      <div class="preview-layout">
+        <div class="game" aria-label="Completed guesses with letters hidden">
+          <div class="guess">
+            <span class="tile incorrect"></span>
+            <span class="tile misplaced"></span>
+            <span class="tile incorrect"></span>
+            <span class="tile incorrect"></span>
+            <span class="tile misplaced"></span>
+          </div>
+          <div class="guess">
+            <span class="tile correct"></span>
+            <span class="tile correct"></span>
+            <span class="tile incorrect"></span>
+            <span class="tile misplaced"></span>
+            <span class="tile correct"></span>
+          </div>
+          <div class="guess">
+            <span class="tile correct"></span>
+            <span class="tile correct"></span>
+            <span class="tile correct"></span>
+            <span class="tile correct"></span>
+            <span class="tile correct"></span>
+          </div>
+        </div>
+        <section class="result-card" aria-labelledby="result-title">
+          <h2 id="result-title">Congratulations! Got it in 3 guesses.</h2>
+          <p>Challenge a friend without giving away the answer.</p>
+          <pre id="share-text">
+Word Game - Solved
+Attempts: 3/6
+
+⬛🟨⬛⬛🟨
+🟩🟩⬛🟨🟩
+🟩🟩🟩🟩🟩
+
+Can you beat my score?</pre
+          >
+          <div class="actions">
+            <button class="share" id="share-button" type="button">
+              Share challenge
+            </button>
+            <button class="replay" id="replay-button" type="button">
+              Play again
+            </button>
+          </div>
+          <p id="status" aria-live="polite"></p>
+        </section>
+      </div>
+    </main>
+    <script>
+      const shareButton = document.querySelector("#share-button");
+      const replayButton = document.querySelector("#replay-button");
+      const shareText = document
+        .querySelector("#share-text")
+        .textContent.trim();
+      const status = document.querySelector("#status");
+      const challengeUrl = new URL("../public/index.html", window.location.href)
+        .href;
+
+      shareButton.addEventListener("click", async () => {
+        const shareData = {
+          title: "Word Game challenge",
+          text: shareText,
+          url: challengeUrl,
+        };
+
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+            status.textContent = "Challenge shared!";
+            return;
+          } catch (error) {
+            if (error.name === "AbortError") {
+              return;
+            }
+          }
+        }
+
+        try {
+          await navigator.clipboard.writeText(
+            `${shareText}\n${challengeUrl}`
+          );
+          status.textContent = "Result and challenge link copied!";
+        } catch (error) {
+          status.textContent =
+            "Select the result above to copy the challenge manually.";
+        }
+      });
+
+      replayButton.addEventListener("click", () => {
+        window.location.assign(challengeUrl);
+      });
+    </script>
+  </body>
+</html>
