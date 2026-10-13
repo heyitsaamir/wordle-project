@@ -7,14 +7,14 @@ html {
   --game-spacing: 32px;
   --header-height: 4rem;
 
-  --color-success: hsl(150deg 70% 30%);
-  --color-warning: hsl(50deg 100% 30%);
-  --color-error: hsl(0deg 70% 45%);
-  --color-gray-100: hsl(0deg 0% 10%);
-  --color-gray-300: hsl(0deg 0% 25%);
-  --color-gray-500: hsl(0deg 0% 50%);
-  --color-gray-700: hsl(0deg 0% 75%);
-  --color-gray-900: hsl(0deg 0% 90%);
+  --color-success: hsl(215deg 78% 38%);
+  --color-warning: hsl(270deg 55% 42%);
+  --color-error: hsl(335deg 65% 38%);
+  --color-gray-100: hsl(215deg 30% 18%);
+  --color-gray-300: hsl(215deg 20% 34%);
+  --color-gray-500: hsl(215deg 15% 48%);
+  --color-gray-700: hsl(215deg 25% 70%);
+  --color-gray-900: hsl(215deg 45% 97%);
 }
 
 /*
@@ -22,6 +22,8 @@ html {
 */
 body {
   font-family: sans-serif;
+  background: var(--color-gray-900);
+  color: var(--color-gray-100);
 }
 
 @media (max-height: 600px) {
@@ -97,46 +99,63 @@ h1 {
 }
 
 .cell {
+  --cell-background: white;
+  --cell-outline: var(--color-gray-700);
+  --star-shape: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+
   position: relative;
+  isolation: isolate;
   width: 20%;
   display: grid;
   place-content: center;
   aspect-ratio: 1 / 1;
-  border: 2px solid var(--color-gray-700);
-  border-radius: var(--radius);
-  font-size: 2rem;
+  font-size: clamp(0.875rem, 2.5vmin, 1.5rem);
+  font-weight: 700;
 }
 
-/*
-  Round the corners for the 4 cells at the very corners of
-  the game board
-*/
-.guess:first-of-type .cell:first-of-type {
-  --radius: 4px 0px 0px 0px;
+.cell::before,
+.cell::after {
+  content: '';
+  position: absolute;
+  clip-path: var(--star-shape);
 }
-.guess:first-of-type .cell:last-of-type {
-  --radius: 0px 4px 0px 0px;
+
+.cell::before {
+  inset: 0;
+  z-index: -2;
+  background: var(--cell-outline);
 }
-.guess:last-of-type .cell:last-of-type {
-  --radius: 0px 0px 4px 0px;
-}
-.guess:last-of-type .cell:first-of-type {
-  --radius: 0px 0px 0px 4px;
+
+.cell::after {
+  inset: 4px;
+  z-index: -1;
+  background: var(--cell-background);
 }
 
 .cell.correct {
-  background: var(--color-success);
-  border-color: var(--color-success);
+  --cell-background: var(--color-success);
+  --cell-outline: var(--color-success);
   color: white;
 }
 .cell.incorrect {
-  background: var(--color-gray-300);
-  border-color: var(--color-gray-300);
+  --cell-background: var(--color-gray-300);
+  --cell-outline: var(--color-gray-300);
   color: white;
 }
 .cell.misplaced {
-  background: var(--color-warning);
-  border-color: var(--color-warning);
+  --cell-background: var(--color-warning);
+  --cell-outline: var(--color-warning);
   color: white;
 }
 
